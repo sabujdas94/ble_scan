@@ -10,12 +10,14 @@ target_address = None
 
 async def connect_and_discover(address):
     try:
+        print(address)
         async with BleakClient(address) as client:
             print(f"Connected to {address}")
 
             # Check if the device is connected
             if client.is_connected:
-                print(f"Device Name: {client.name.strip()}")  # Trim leading and trailing spaces
+                print(client)
+                # print(f"Device Name: {client.name.strip()}")  # Trim leading and trailing spaces
 
                 # Discover services and characteristics
                 services = await client.get_services()
@@ -63,7 +65,7 @@ async def run_scanner():
     await scanner.start()
 
     # Run the scanner for a specified duration (it will stop early if the target device is found)
-    await asyncio.sleep(20)  # Scan for up to 10 seconds
+    await asyncio.sleep(2000)  # Scan for up to 10 seconds
 
 
 # Run the scanner in the asyncio event loop
