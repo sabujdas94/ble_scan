@@ -1,0 +1,45 @@
+C:\Users\Sabuj\PycharmProjects\MLBLE\.venv\Scripts\python.exe C:\Users\Sabuj\PycharmProjects\MLBLE\main.py
+Scanning for devices...
+Target Device Found! Name: 81:2A:75:ED:B4:9F, Address: 81:2A:75:ED:B4:9F
+Scanning stopped.
+81:2A:75:ED:B4:9F
+Connected to 81:2A:75:ED:B4:9F
+BleakClient, 81:2A:75:ED:B4:9F
+Service: 00001801-0000-1000-8000-00805f9b34fb
+  Characteristic: 00002a05-0000-1000-8000-00805f9b34fb
+C:\Users\Sabuj\PycharmProjects\MLBLE\main.py:23: FutureWarning: This method will be removed future version, use the services property instead.
+  services = await client.get_services()
+    Error reading characteristic 00002a05-0000-1000-8000-00805f9b34fb: Could not read characteristic handle 2: Protocol Error 0x02: Read Not Permitted
+Service: 00001800-0000-1000-8000-00805f9b34fb
+  Characteristic: 00002a00-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'MLBLE\x00')
+  Characteristic: 00002a01-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x80\x03')
+  Characteristic: 00002a04-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00')
+  Characteristic: 00002aa6-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x00')
+Service: 00001901-0000-1000-8000-00805f9b34fb
+  Characteristic: 00001a01-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x01\x02')
+  Characteristic: 00001a02-0000-1000-8000-00805f9b34fb
+    Error reading characteristic 00001a02-0000-1000-8000-00805f9b34fb: Could not read characteristic handle 17: Protocol Error 0x02: Read Not Permitted
+Service: 0000d0ff-3c17-d293-8e48-14fe2e4da212
+  Characteristic: 0000ffd1-0000-1000-8000-00805f9b34fb
+    Error reading characteristic 0000ffd1-0000-1000-8000-00805f9b34fb: Could not read characteristic handle 21: Protocol Error 0x0A: Attribute Not Found
+  Characteristic: 0000ffd2-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x81*u\xed\xb4\x9f')
+  Characteristic: 0000ffd3-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x00\x00\x0f ')
+  Characteristic: 0000ffd4-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x01\x00\x00X')
+  Characteristic: 0000ffd5-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'')
+  Characteristic: 0000ffd8-0000-1000-8000-00805f9b34fb
+    Error reading characteristic 0000ffd8-0000-1000-8000-00805f9b34fb: Could not read characteristic handle 31: Protocol Error 0x02: Read Not Permitted
+  Characteristic: 0000fff1-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\t\x01\x00\x07\x00\x08\x00\x00\xf0\x0f\x00\x00')
+  Characteristic: 0000fff2-0000-1000-8000-00805f9b34fb
+    Error reading characteristic 0000fff2-0000-1000-8000-00805f9b34fb: Could not read characteristic handle 35: Protocol Error 0x02: Read Not Permitted
+  Characteristic: 0000ffe0-0000-1000-8000-00805f9b34fb
+    Value: bytearray(b'\x01\x00\x00\x00\x00 \x00\x00\x00\x00\x0f \x01\x00\x00X')

@@ -6,13 +6,16 @@ TARGET_ADDRESS = "81:2A:75:ED:B4:9F"
 
 # Store the address of the target device once found
 target_address = None
-
+MODEL_NBR_UUID = "00001801-0000-1000-8000-00805f9b34fb"
 
 async def connect_and_discover(address):
     try:
         print(address)
         async with BleakClient(address) as client:
             print(f"Connected to {address}")
+
+            model_number = await client.read_gatt_char(MODEL_NBR_UUID)
+            print("Model Number: {0}".format("".join(map(chr, model_number))))
 
             # Check if the device is connected
             if client.is_connected:
