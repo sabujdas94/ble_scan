@@ -1,12 +1,46 @@
 import asyncio
 from bleak import BleakClient, BleakScanner
+import hashlib
+import uuid
 
 # Define the target device name and address (address will be determined during scanning)
 TARGET_ADDRESS = "81:2A:75:ED:B4:9F"
+# UUIDs and Key as strings
+service_uuid = "jx01b2449134b6c4"
 
-# Store the address of the target device once found
-target_address = None
-MODEL_NBR_UUID = "00001801-0000-1000-8000-00805f9b34fb"
+uuid_hex_string = "jx01b2449134b6c4"
+
+key_hex_string = "zf3uOdDCkmwF2iwGMAsR7if9s08RrFTV"
+
+# Convert to bytearray
+unlock_command = bytearray(key_hex_string.encode('utf-8'))
+
+
+def string_to_uuid(input_string):
+    # Hash the string using SHA-1 and take the first 128 bits (32 characters)
+    hash_object = hashlib.sha1(input_string.encode('utf-8')).hexdigest()[:32]
+
+    # Format it as a UUID
+    formatted_uuid = f"{hash_object[:8]}-{hash_object[8:12]}-{hash_object[12:16]}-{hash_object[16:20]}-{hash_object[20:32]}"
+
+    return str(uuid.UUID(formatted_uuid))
+
+async def unlock_padlock():
+    async with BleakClient(TARGET_ADDRESS) as client:
+        # Check if the padlock is connected
+        if await client.is_connected():
+            print(f"Connected to {TARGET_ADDRESS}")
+
+            unlock_characteristic_uuid = string_to_uuid(uuid_hex_string)
+
+            print("Unlock Characteristic UUID:", unlock_characteristic_uuid)
+
+            # Send the unlock command
+            await client.write_gatt_char(unlock_characteristic_uuid, unlock_command)
+            print("Unlock command sent!")
+
+        else:
+            print(f"Failed to connect to {TARGET_ADDRESS}")
 
 async def connect_and_discover(address):
     try:
@@ -14,27 +48,28 @@ async def connect_and_discover(address):
         async with BleakClient(address) as client:
             print(f"Connected to {address}")
 
-            model_number = await client.read_gatt_char(MODEL_NBR_UUID)
-            print("Model Number: {0}".format("".join(map(chr, model_number))))
-
-            # Check if the device is connected
-            if client.is_connected:
-                print(client)
-                # print(f"Device Name: {client.name.strip()}")  # Trim leading and trailing spaces
-
-                # Discover services and characteristics
-                services = await client.get_services()
-                for service in services:
-                    print(f"Service: {service.uuid}")
-                    for characteristic in service.characteristics:
-                        print(f"  Characteristic: {characteristic.uuid}")
-
-                        # Optionally read the characteristic value
-                        try:
-                            value = await client.read_gatt_char(characteristic.uuid)
-                            print(f"    Value: {value}")
-                        except Exception as e:
-                            print(f"    Error reading characteristic {characteristic.uuid}: {e}")
+            #
+            # model_number = await client.read_gatt_char(MODEL_NBR_UUID)
+            # print("Model Number: {0}".format("".join(map(chr, model_number))))
+            #
+            # # Check if the device is connected
+            # if client.is_connected:
+            #     print(client)
+            #     # print(f"Device Name: {client.name.strip()}")  # Trim leading and trailing spaces
+            #
+            #     # Discover services and characteristics
+            #     services = await client.get_services()
+            #     for service in services:
+            #         print(f"Service: {service.uuid}")
+            #         for characteristic in service.characteristics:
+            #             print(f"  Characteristic: {characteristic.uuid}")
+            #
+            #             # Optionally read the characteristic value
+            #             try:
+            #                 value = await client.read_gatt_char(characteristic.uuid)
+            #                 print(f"    Value: {value}")
+            #             except Exception as e:
+            #                 print(f"    Error reading characteristic {characteristic.uuid}: {e}")
 
     except Exception as e:
         print(f"Error connecting to {address}: {e}")
@@ -76,4 +111,4 @@ async def main():
     await run_scanner()
 
 
-asyncio.run(main())
+asyncio.run(unlock_padlock())
